@@ -24,3 +24,11 @@ export const updateMenuItemPrice = (id: string, price: number): Promise<AxiosRes
 export const increaseCategoryPrice = (category: string, percentage: number): Promise<AxiosResponse<MenuItem[]>> => {
   return apiClient.put(`/menu/category/${category}`, { percentage });
 };
+
+export const createMenuItem = (item: Omit<MenuItem, 'id' | 'menuCategoryId' | 'description'>): Promise<AxiosResponse<MenuItem>> => {
+  return apiClient.post('/menu', item);
+};
+
+export const deleteMenuItem = (id: string): Promise<AxiosResponse<void>> => {
+  return apiClient.delete(`/menu/${id}`);
+};

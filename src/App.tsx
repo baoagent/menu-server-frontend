@@ -7,11 +7,9 @@ import './i18n';
 function App() {
   return (
     <Router>
-      <div className="App">
-        <Routes>
+      <Routes>
           <Route path="/" element={<MenuList />} />
         </Routes>
-      </div>
     </Router>
   );
 }
