@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getMenuItems, updateMenuItemPrice, increaseCategoryPrice } from '../api.ts';
+import { getMenuItems, updateMenuItemPrice, increaseCategoryPrice, createMenuItem, deleteMenuItem } from '../api.ts';
 import { useTranslation } from 'react-i18next';
 
 interface MenuItem {
@@ -12,7 +12,7 @@ interface MenuItem {
 }
 
 const MenuList: React.FC = () => {
-  const { i18n } = useTranslation();
+  const { t } = useTranslation();
   const [menu, setMenu] = useState<MenuItem[]>([]);
   const [newItem, setNewItem] = useState({ category: '', name: '', price: '' });
   const [categoryPercentages, setCategoryPercentages] = useState<{ [key: string]: string }>({});
@@ -52,7 +52,7 @@ const MenuList: React.FC = () => {
   const handleSave = async (item: MenuItem) => {
     try {
       await updateMenuItemPrice(item.id, item.price);
-      alert('Item updated successfully!');
+      alert(t('item_updated_successfully'));
     } catch (error) {
       console.error("Error updating menu item:", error);
       alert('Failed to update item.');
@@ -115,19 +115,13 @@ const MenuList: React.FC = () => {
     }
   };
 
-  const changeLanguage = (lng: string) => {
-    i18n.changeLanguage(lng);
-  };
+  
 
   const categories = Array.from(new Set(menu.map(item => item.category)));
 
   return (
     <div className="container">
-      <div className="language-switcher">
-        <button onClick={() => changeLanguage('en')}>English</button>
-        <button onClick={() => changeLanguage('zh')}>中文</button>
-        <button onClick={() => changeLanguage('es')}>Español</button>
-      </div>
+      
 
       {/* Menu Items Management */}
       <div className="section-card">
@@ -138,8 +132,8 @@ const MenuList: React.FC = () => {
               <tr>
                 <th>Category</th>
                 <th>Item Name</th>
-                <th>Price ($)</th>
-                <th>Actions</th>
+                <th>{t('price')} ($)</th>
+                <th>{t('actions')}</th>
               </tr>
             </thead>
             <tbody>
@@ -174,8 +168,8 @@ const MenuList: React.FC = () => {
                     />
                   </td>
                   <td>
-                    <button className="btn btn-save" onClick={() => handleSave(item)}>Save</button>
-                    <button className="btn btn-delete" onClick={() => handleDelete(item.id)}>Delete</button>
+                    <button className="btn btn-save" onClick={() => handleSave(item)}>{t('save')}</button>
+                    <button className="btn btn-delete" onClick={() => handleDelete(item.id)}>{t('delete')}</button>
                   </td>
                 </tr>
               ))}
@@ -188,7 +182,7 @@ const MenuList: React.FC = () => {
                     value={newItem.category}
                     onChange={handleNewItemChange}
                   >
-                    <option value="">Select Category</option>
+                    <option value="">{t('select_category')}</option>
                     {categories.map(cat => (
                       <option key={cat} value={cat}>{cat}</option>
                     ))}
@@ -199,7 +193,7 @@ const MenuList: React.FC = () => {
                     type="text"
                     className="item-name-input"
                     name="name"
-                    placeholder="Enter item name"
+                    placeholder={t('enter_item_name')}
                     value={newItem.name}
                     onChange={handleNewItemChange}
                   />
@@ -216,7 +210,7 @@ const MenuList: React.FC = () => {
                   />
                 </td>
                 <td>
-                  <button className="btn btn-save" onClick={handleAddItem}>Add Item</button>
+                  <button className="btn btn-save" onClick={handleAddItem}>{t('add_item')}</button>
                 </td>
               </tr>
             </tbody>
@@ -226,13 +220,13 @@ const MenuList: React.FC = () => {
 
       {/* Category Price Updates */}
       <div className="section-card">
-        <h2 className="section-title">Update Category Prices</h2>
+        <h2 className="section-title">{t('update_category_prices')}</h2>
         <div className="category-updates">
           {categories.map(category => (
             <div className="category-update-item" key={category}>
               <div className="category-name">{category}</div>
               <div className="update-controls">
-                <span>Increase all prices by</span>
+                <span>{t('increase_all_prices_by')}</span>
                 <input
                   type="number"
                   className="percentage-input"
@@ -243,7 +237,7 @@ const MenuList: React.FC = () => {
                 />
                 <span>%</span>
                 <button className="btn btn-increase" onClick={() => handleIncreaseCategoryPrices(category)}>
-                  Update Prices
+                  {t('update_prices')}
                 </button>
               </div>
             </div>
