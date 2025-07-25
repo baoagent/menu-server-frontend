@@ -30,5 +30,15 @@
   "increase_all_prices_by": "Increase all prices by",
   "update_prices": "Update Prices",
   "bao_agent": "BAO Agent",
-  "menu_management": "Menu Management"
+  "menu_management": "Menu Management",
+  "category_management": "Category Management",
+  "new_category_name": "New Category Name",
+  "create_category": "Create Category",
+  "existing_categories": "Existing Categories",
+  "enter_category_name": "Please enter a category name.",
+  "category_created_successfully": "Category created successfully!",
+  "failed_to_create_category": "Failed to create category.",
+  "category_deleted_successfully": "Category deleted successfully!",
+  "failed_to_delete_category": "Failed to delete category.",
+  "category_not_found": "Category not found."
 }

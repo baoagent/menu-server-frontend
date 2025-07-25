@@ -277,6 +277,44 @@ body {
     background: #fef3c7;
 }
 
+/* Category Management Styles */
+.category-creation {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.category-input {
+    flex-grow: 1;
+    padding: 10px 15px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.category-input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.category-list ul {
+    list-style: none;
+    padding: 0;
+}
+
+.category-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.category-list li:last-child {
+    border-bottom: none;
+}
+
 @media (max-width: 768px) {
     body {
         padding: 1rem 0.5rem;

@@ -18,17 +18,24 @@ export const getMenuItems = (): Promise<AxiosResponse<MenuItem[]>> => {
 };
 
 export const updateMenuItemPrice = (id: string, price: number): Promise<AxiosResponse<MenuItem>> => {
-  return apiClient.put(`/menu/${id}`, { price });
+  return apiClient.put(`/menu/items/${id}`, { price });
 };
 
-export const increaseCategoryPrice = (category: string, percentage: number): Promise<AxiosResponse<MenuItem[]>> => {
-  return apiClient.put(`/menu/category/${category}`, { percentage });
-};
+
 
 export const createMenuItem = (item: Omit<MenuItem, 'id' | 'menuCategoryId' | 'description'>): Promise<AxiosResponse<MenuItem>> => {
-  return apiClient.post('/menu', item);
+  return apiClient.post('/menu/items', item);
 };
 
 export const deleteMenuItem = (id: string): Promise<AxiosResponse<void>> => {
-  return apiClient.delete(`/menu/${id}`);
+  return apiClient.delete(`/menu/items/${id}`);
 };
+
+export const createCategory = (name: string): Promise<AxiosResponse<{ id: string; name: string }>> => {
+  return apiClient.post('/menu/categories', { name });
+};
+
+export const getMenuPdf = (): Promise<AxiosResponse<Blob>> => {
+  return apiClient.get('/menu/pdf', { responseType: 'blob' });
+};
+
