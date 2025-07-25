@@ -55,7 +55,7 @@ const MenuList: React.FC = () => {
       alert(t('item_updated_successfully'));
     } catch (error) {
       console.error("Error updating menu item:", error);
-      alert('Failed to update item.');
+      alert(t('failed_to_update_item'));
     }
   };
 
@@ -63,10 +63,10 @@ const MenuList: React.FC = () => {
     try {
       await deleteMenuItem(itemId);
       fetchMenu();
-      alert('Item deleted successfully!');
+      alert(t('item_updated_successfully'));
     } catch (error) {
       console.error("Error deleting menu item:", error);
-      alert('Failed to delete item.');
+      alert(t('failed_to_delete_item'));
     }
   };
 
@@ -77,7 +77,7 @@ const MenuList: React.FC = () => {
 
   const handleAddItem = async () => {
     if (!newItem.category || !newItem.name || !newItem.price) {
-      alert('Please fill in all fields for the new item.');
+      alert(t('fill_all_fields'));
       return;
     }
     try {
@@ -88,10 +88,10 @@ const MenuList: React.FC = () => {
       });
       setNewItem({ category: '', name: '', price: '' });
       fetchMenu();
-      alert('New item added successfully!');
+      alert(t('new_item_added_successfully'));
     } catch (error) {
       console.error("Error adding new item:", error);
-      alert('Failed to add new item.');
+      alert(t('failed_to_add_new_item'));
     }
   };
 
@@ -105,13 +105,13 @@ const MenuList: React.FC = () => {
       try {
         await increaseCategoryPrice(category, percentage);
         fetchMenu(); // Re-fetch menu to show updated prices
-        alert(`Prices for ${category} increased by ${percentage}%`);
+        alert(t('prices_increased_by', { category, percentage }));
       } catch (error) {
         console.error(`Error increasing prices for ${category}:`, error);
-        alert(`Failed to increase prices for ${category}.`);
+        alert(t('failed_to_increase_prices', { category }));
       }
     } else {
-      alert('Please enter a valid percentage.');
+      alert(t('enter_valid_percentage'));
     }
   };
 
@@ -125,13 +125,13 @@ const MenuList: React.FC = () => {
 
       {/* Menu Items Management */}
       <div className="section-card">
-        <h2 className="section-title">Menu Items</h2>
+        <h2 className="section-title">{t('menu_items')}</h2>
         <div className="menu-table-container">
           <table className="menu-table">
             <thead>
               <tr>
-                <th>Category</th>
-                <th>Item Name</th>
+                <th>{t('category')}</th>
+                <th>{t('item_name')}</th>
                 <th>{t('price')} ($)</th>
                 <th>{t('actions')}</th>
               </tr>

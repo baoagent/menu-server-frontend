@@ -19,8 +19,8 @@ function App() {
         <header className="app-header">
           <img src={porkBunIcon} alt="Pork Bun Icon" className="app-icon" />
           <div className="app-title-group">
-            <h1 className="app-title">BAO Agent</h1>
-            <p className="app-subtitle">Menu Management</p>
+            <h1 className="app-title">{t('bao_agent')}</h1>
+            <p className="app-subtitle">{t('menu_management')}</p>
           </div>
           <div className="language-switcher">
           <button className={i18n.language === 'en' ? 'active' : ''} onClick={() => changeLanguage('en')}>English</button>

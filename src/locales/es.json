@@ -28,5 +28,7 @@
   "add_item": "Añadir Artículo",
   "update_category_prices": "Actualizar Precios de Categoría",
   "increase_all_prices_by": "Aumentar todos los precios en",
-  "update_prices": "Actualizar Precios"
+  "update_prices": "Actualizar Precios",
+  "bao_agent": "Agente BAO",
+  "menu_management": "Gestión de Menú"
 }

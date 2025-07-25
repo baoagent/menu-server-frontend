@@ -28,5 +28,7 @@
   "add_item": "添加项目",
   "update_category_prices": "更新类别价格",
   "increase_all_prices_by": "所有价格上涨",
-  "update_prices": "更新价格"
+  "update_prices": "更新价格",
+  "bao_agent": "包总管",
+  "menu_management": "菜单管理平台"
 }
