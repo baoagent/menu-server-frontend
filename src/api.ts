@@ -9,11 +9,17 @@ interface MenuItem {
   menuCategoryId: string;
 }
 
+interface MenuCategory {
+  id: string;
+  name: string;
+  menuItems: MenuItem[];
+}
+
 const apiClient = axios.create({
   baseURL: 'http://localhost:3001/api',
 });
 
-export const getMenuItems = (): Promise<AxiosResponse<MenuItem[]>> => {
+export const getMenuItems = (): Promise<AxiosResponse<MenuCategory[]>> => {
   return apiClient.get('/menu');
 };
 
@@ -23,7 +29,7 @@ export const updateMenuItemPrice = (id: string, price: number): Promise<AxiosRes
 
 
 
-export const createMenuItem = (item: Omit<MenuItem, 'id' | 'menuCategoryId' | 'description'>): Promise<AxiosResponse<MenuItem>> => {
+export const createMenuItem = (item: Omit<MenuItem, 'id'>): Promise<AxiosResponse<MenuItem>> => {
   return apiClient.post('/menu/items', item);
 };
 

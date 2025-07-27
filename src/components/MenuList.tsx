@@ -17,7 +17,7 @@ interface MenuItem {
 const MenuList: React.FC = () => {
   const { t } = useTranslation();
   const [menu, setMenu] = useState<MenuItem[]>([]);
-  const [newItem, setNewItem] = useState({ category: '', name: '', price: '' });
+  const [newItem, setNewItem] = useState({ category: '', name: '', price: '', description: '' });
   const [categories, setCategories] = useState<string[]>([]);
 
   useEffect(() => {
@@ -28,7 +28,8 @@ const MenuList: React.FC = () => {
   const fetchMenu = async () => {
     try {
       const response = await getMenuItems();
-      setMenu(response.data);
+      const allMenuItems = response.data.flatMap(category => category.menuItems);
+      setMenu(allMenuItems);
     } catch (error) {
       console.error("Error fetching menu:", error);
     }
@@ -37,7 +38,7 @@ const MenuList: React.FC = () => {
   const fetchCategories = async () => {
     try {
       const response = await getMenuItems();
-      const uniqueCategories = Array.from(new Set(response.data.map(item => item.category)));
+      const uniqueCategories = Array.from(new Set(response.data.map(category => category.name)));
       setCategories(uniqueCategories);
     } catch (error) {
       console.error("Error fetching categories:", error);
@@ -88,10 +89,19 @@ const MenuList: React.FC = () => {
       return;
     }
     try {
+      const allCategories = await getMenuItems();
+      const selectedCategory = allCategories.data.find(cat => cat.name === newItem.category);
+
+      if (!selectedCategory) {
+        alert(t('category_not_found'));
+        return;
+      }
+
       await createMenuItem({
         name: newItem.name,
+        description: newItem.description,
         price: parseFloat(newItem.price),
-        category: newItem.category,
+        menuCategoryId: selectedCategory.id,
       });
       setNewItem({ category: '', name: '', price: '' });
       fetchMenu();

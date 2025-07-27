@@ -20,8 +20,8 @@ const CategoryPriceUpdater: React.FC<CategoryPriceUpdaterProps> = ({ categories,
     if (!isNaN(percentage) && percentage > 0) {
       try {
         const response = await getMenuItems();
-        const menuItems = response.data;
-        const itemsToUpdate = menuItems.filter(item => item.category === category);
+        const allMenuItems = response.data.flatMap(categoryItem => categoryItem.menuItems);
+        const itemsToUpdate = allMenuItems.filter(item => item.category === category);
 
         for (const item of itemsToUpdate) {
           const newPrice = item.price * (1 + percentage / 100);
