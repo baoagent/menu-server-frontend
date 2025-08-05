@@ -3,22 +3,22 @@ import { getMenuItems, updateMenuItemPrice, createMenuItem, deleteMenuItem } fro
 import { useTranslation } from 'react-i18next';
 import CategoryManager from './CategoryManager.tsx';
 import CategoryPriceUpdater from './CategoryPriceUpdater.tsx';
-import MenuItemTable from './MenuItemTable.tsx';
+import MenuItemTable, { MenuCategory } from './MenuItemTable.tsx';
 
 interface MenuItem {
   id: string;
   name: string;
   description: string;
   price: number;
-  category: string;
   menuCategoryId: string;
 }
 
 const MenuList: React.FC = () => {
   const { t } = useTranslation();
   const [menu, setMenu] = useState<MenuItem[]>([]);
-  const [newItem, setNewItem] = useState({ category: '', name: '', price: '', description: '' });
+  const [newItem, setNewItem] = useState({ category: '', name: '', price: '', description: ''});
   const [categories, setCategories] = useState<string[]>([]);
+  const [menuCategories, setMenuCategories] = useState<MenuCategory[]>([]);
 
   useEffect(() => {
     fetchMenu();
@@ -26,19 +26,20 @@ const MenuList: React.FC = () => {
   }, []);
 
   const fetchMenu = async () => {
-    try {
-      const response = await getMenuItems();
-      const allMenuItems = response.data.flatMap(category => category.menuItems);
-      setMenu(allMenuItems);
-    } catch (error) {
-      console.error("Error fetching menu:", error);
-    }
-  };
+  try {
+    const response = await getMenuItems();
+    setMenuCategories(response.data); // Save the full structure for the tree
+    const allMenuItems = response.data.flatMap(category => category.menuItems);
+    setMenu(allMenuItems);
+  } catch (error) {
+    console.error("Error fetching menu:", error);
+  }
+};
 
   const fetchCategories = async () => {
     try {
       const response = await getMenuItems();
-      const uniqueCategories = Array.from(new Set(response.data.map(category => category.name)));
+      const uniqueCategories = Array.from(new Set<string>(response.data.map(category => category.name)));
       setCategories(uniqueCategories);
     } catch (error) {
       console.error("Error fetching categories:", error);
@@ -51,8 +52,8 @@ const MenuList: React.FC = () => {
       updatedMenu[index].price = parseFloat(value as string);
     } else if (field === 'name') {
       updatedMenu[index].name = value as string;
-    } else if (field === 'category') {
-      updatedMenu[index].category = value as string;
+    } else if (field === 'menuCategoryId') {
+      updatedMenu[index].menuCategoryId = value as string;
     }
     setMenu(updatedMenu);
   };
@@ -103,7 +104,7 @@ const MenuList: React.FC = () => {
         price: parseFloat(newItem.price),
         menuCategoryId: selectedCategory.id,
       });
-      setNewItem({ category: '', name: '', price: '' });
+      setNewItem({ category: '', name: '', price: '', description: ''});
       fetchMenu();
       alert(t('new_item_added_successfully'));
     } catch (error) {
@@ -129,6 +130,7 @@ const MenuList: React.FC = () => {
         handleDelete={handleDelete}
         handleNewItemChange={handleNewItemChange}
         handleAddItem={handleAddItem}
+        menuCategories={menuCategories}
       />
       <CategoryPriceUpdater
         categories={categories}

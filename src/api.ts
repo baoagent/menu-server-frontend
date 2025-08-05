@@ -1,11 +1,11 @@
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
+import { AxiosResponse } from 'axios';
 
 interface MenuItem {
   id: string;
   name: string;
   description: string;
   price: number;
-  category: string;
   menuCategoryId: string;
 }
 
