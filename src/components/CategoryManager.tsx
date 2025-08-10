@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { createCategory } from '../api.ts';
+import { createCategory, deleteCategory } from '../api.ts';
 import { MenuCategory } from './MenuItemTable.tsx';
 
 interface CategoryManagerProps {
@@ -12,6 +12,7 @@ interface CategoryManagerProps {
 const CategoryManager: React.FC<CategoryManagerProps> = ({ menuCategories, menu, fetchMenu }) => {
   const { t } = useTranslation();
   const [newCategoryName, setNewCategoryName] = useState('');
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string>('');
 
   const handleCreateCategory = async () => {
     if (!newCategoryName) {
@@ -29,6 +30,22 @@ const CategoryManager: React.FC<CategoryManagerProps> = ({ menuCategories, menu,
     }
   };
 
+  const handleDeleteCategory = async () => {
+    if (!selectedCategoryId) {
+      alert(t('select_category_to_delete'));
+      return;
+    }
+    try {
+      await deleteCategory(selectedCategoryId);
+      setSelectedCategoryId('');
+      fetchMenu();
+      alert(t('category_deleted_successfully'));
+    } catch (error) {
+      console.error("Error deleting category:", error);
+      alert(t('failed_to_delete_category'));
+    }
+  };
+
   return (
     <div className="section-card">
       <h2 className="section-title">{t('category_management')}</h2>
@@ -42,6 +59,23 @@ const CategoryManager: React.FC<CategoryManagerProps> = ({ menuCategories, menu,
         />
         <button className="btn btn-save" onClick={handleCreateCategory}>
           {t('create_category')}
+        </button>
+      </div>
+      <div className="category-deletion">
+        <select
+          className="category-select"
+          value={selectedCategoryId}
+          onChange={(e) => setSelectedCategoryId(e.target.value)}
+        >
+          <option value="">{t('select_category')}</option>
+          {menuCategories.map(cat => (
+            <option key={cat.id} value={cat.id}>
+              {cat.name}
+            </option>
+          ))}
+        </select>
+        <button className="btn btn-delete" onClick={handleDeleteCategory}>
+          {t('delete_category')}
         </button>
       </div>
       <div className="category-list">

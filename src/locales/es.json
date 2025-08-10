@@ -23,7 +23,7 @@
   "menu_items": "Elementos del Menú",
   "save": "Guardar",
   "delete": "Eliminar",
-  "select_category": "Seleccionar Categoría",
+  "select_category": "Seleccione una categoría",
   "enter_item_name": "Ingresar nombre del artículo",
   "add_item": "Añadir Artículo",
   "update_category_prices": "Actualizar Precios de Categoría",
@@ -41,5 +41,7 @@
   "category_deleted_successfully": "¡Categoría eliminada exitosamente!",
   "failed_to_delete_category": "Error al eliminar la categoría.",
   "category_not_found": "Categoría no encontrada.",
-  "generate_pdf": "Generar PDF"
+  "generate_pdf": "Generar PDF",
+  "delete_category": "Eliminar Categoría",
+  "select_category_to_delete": "Por favor, seleccione una categoría para eliminar."
 }

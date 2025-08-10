@@ -45,3 +45,7 @@ export const getMenuPdf = (): Promise<AxiosResponse<Blob>> => {
   return apiClient.get('/menu/pdf', { responseType: 'blob' });
 };
 
+export const deleteCategory = (categoryId: string): Promise<AxiosResponse<void>> => {
+  return apiClient.delete(`/menu/categories/${categoryId}`);
+};
+

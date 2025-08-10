@@ -23,7 +23,7 @@
   "menu_items": "Menu Items",
   "save": "Save",
   "delete": "Delete",
-  "select_category": "Select Category",
+  "select_category": "Select a category",
   "enter_item_name": "Enter item name",
   "add_item": "Add Item",
   "update_category_prices": "Update Category Prices",
@@ -41,5 +41,7 @@
   "category_deleted_successfully": "Category deleted successfully!",
   "failed_to_delete_category": "Failed to delete category.",
   "category_not_found": "Category not found.",
-  "generate_pdf": "Generate PDF"
+  "generate_pdf": "Generate PDF",
+  "delete_category": "Delete Category",
+  "select_category_to_delete": "Please select a category to delete."
 }
