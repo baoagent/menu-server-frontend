@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { createCategory } from '../api.ts';
+import { MenuCategory } from './MenuItemTable.tsx';
 
 interface CategoryManagerProps {
-  categories: string[];
+  menuCategories: MenuCategory[];
   menu: any[]; // This should be more specific, but for now, any is fine
   fetchMenu: () => void;
-  fetchCategories: () => void;
 }
 
-const CategoryManager: React.FC<CategoryManagerProps> = ({ categories, menu, fetchMenu, fetchCategories }) => {
+const CategoryManager: React.FC<CategoryManagerProps> = ({ menuCategories, menu, fetchMenu }) => {
   const { t } = useTranslation();
   const [newCategoryName, setNewCategoryName] = useState('');
 
@@ -22,7 +22,6 @@ const CategoryManager: React.FC<CategoryManagerProps> = ({ categories, menu, fet
       await createCategory(newCategoryName);
       setNewCategoryName('');
       fetchMenu();
-      fetchCategories();
       alert(t('category_created_successfully'));
     } catch (error) {
       console.error("Error creating category:", error);
@@ -48,9 +47,9 @@ const CategoryManager: React.FC<CategoryManagerProps> = ({ categories, menu, fet
       <div className="category-list">
         <h3>{t('existing_categories')}</h3>
         <ul>
-          {categories.map(cat => (
-            <li key={cat}>
-              {cat}
+          {menuCategories.map(cat => (
+            <li key={cat.id}>
+              {cat.name}
             </li>
           ))}
         </ul>

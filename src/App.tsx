@@ -1,3 +1,4 @@
+import { getMenuPdf } from './api.ts';
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -13,6 +14,20 @@ function App() {
     i18n.changeLanguage(lng);
   };
 
+  const handleGeneratePdf = async () => {
+    try {
+      const response = await getMenuPdf();
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'menu.pdf');
+      document.body.appendChild(link);
+      link.click();
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+    }
+  };
+
   return (
     <Router>
       <div className="App">
@@ -26,6 +41,9 @@ function App() {
           <button className={i18n.language === 'en' ? 'active' : ''} onClick={() => changeLanguage('en')}>English</button>
           <button className={i18n.language === 'zh' ? 'active' : ''} onClick={() => changeLanguage('zh')}>中文</button>
           <button className={i18n.language === 'es' ? 'active' : ''} onClick={() => changeLanguage('es')}>Español</button>
+        </div>
+        <div className="pdf-generator">
+          <button onClick={handleGeneratePdf}>{t('generate_pdf')}</button>
         </div>
         </header>
         <div className="container">

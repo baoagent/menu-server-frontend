@@ -19,7 +19,6 @@ export interface MenuCategory {
 interface MenuItemTableProps {
   menu: MenuItem[];
   menuCategories: MenuCategory[];
-  categories: string[];
   newItem: { category: string; name: string; price: string };
   handleItemChange: (index: number, field: string, value: string | number) => void;
   handleSave: (item: MenuItem) => Promise<void>;
@@ -30,7 +29,6 @@ interface MenuItemTableProps {
 
 const MenuItemTable: React.FC<MenuItemTableProps> = ({
   menu,
-  categories,
   newItem,
   handleItemChange,
   handleSave,
@@ -134,8 +132,8 @@ const MenuItemTable: React.FC<MenuItemTableProps> = ({
                       onChange={handleNewItemChange}
                     >
                       <option value="">{t('select_category')}</option>
-                      {categories.map(cat => (
-                        <option key={cat} value={cat}>{cat}</option>
+                      {menuCategories.map(cat => (
+                        <option key={cat.id} value={cat.id}>{cat.name}</option>
                       ))}
                     </select>
                   </td>

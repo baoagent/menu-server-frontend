@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { AxiosResponse } from 'axios';
 
-interface MenuItem {
+export interface MenuItem {
   id: string;
   name: string;
   description: string;
@@ -9,7 +9,7 @@ interface MenuItem {
   menuCategoryId: string;
 }
 
-interface MenuCategory {
+export interface MenuCategory {
   id: string;
   name: string;
   menuItems: MenuItem[];

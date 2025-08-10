@@ -40,5 +40,6 @@
   "failed_to_create_category": "创建类别失败。",
   "category_deleted_successfully": "类别删除成功!",
   "failed_to_delete_category": "删除类别失败。",
-  "category_not_found": "未找到类别。"
+  "category_not_found": "未找到类别。",
+  "generate_pdf": "生成PDF"
 }

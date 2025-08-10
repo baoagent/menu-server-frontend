@@ -40,5 +40,6 @@
   "failed_to_create_category": "Error al crear la categoría.",
   "category_deleted_successfully": "¡Categoría eliminada exitosamente!",
   "failed_to_delete_category": "Error al eliminar la categoría.",
-  "category_not_found": "Categoría no encontrada."
+  "category_not_found": "Categoría no encontrada.",
+  "generate_pdf": "Generar PDF"
 }

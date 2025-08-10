@@ -17,12 +17,10 @@ const MenuList: React.FC = () => {
   const { t } = useTranslation();
   const [menu, setMenu] = useState<MenuItem[]>([]);
   const [newItem, setNewItem] = useState({ category: '', name: '', price: '', description: ''});
-  const [categories, setCategories] = useState<string[]>([]);
   const [menuCategories, setMenuCategories] = useState<MenuCategory[]>([]);
 
   useEffect(() => {
     fetchMenu();
-    fetchCategories();
   }, []);
 
   const fetchMenu = async () => {
@@ -36,15 +34,7 @@ const MenuList: React.FC = () => {
   }
 };
 
-  const fetchCategories = async () => {
-    try {
-      const response = await getMenuItems();
-      const uniqueCategories = Array.from(new Set<string>(response.data.map(category => category.name)));
-      setCategories(uniqueCategories);
-    } catch (error) {
-      console.error("Error fetching categories:", error);
-    }
-  };
+  
 
   const handleItemChange = (index: number, field: string, value: string | number) => {
     const updatedMenu = [...menu];
@@ -90,19 +80,11 @@ const MenuList: React.FC = () => {
       return;
     }
     try {
-      const allCategories = await getMenuItems();
-      const selectedCategory = allCategories.data.find(cat => cat.name === newItem.category);
-
-      if (!selectedCategory) {
-        alert(t('category_not_found'));
-        return;
-      }
-
       await createMenuItem({
         name: newItem.name,
         description: newItem.description,
         price: parseFloat(newItem.price),
-        menuCategoryId: selectedCategory.id,
+        menuCategoryId: newItem.category,
       });
       setNewItem({ category: '', name: '', price: '', description: ''});
       fetchMenu();
@@ -116,14 +98,12 @@ const MenuList: React.FC = () => {
   return (
     <div className="container">
       <CategoryManager
-        categories={categories}
+        menuCategories={menuCategories}
         menu={menu}
         fetchMenu={fetchMenu}
-        fetchCategories={fetchCategories}
       />
       <MenuItemTable
         menu={menu}
-        categories={categories}
         newItem={newItem}
         handleItemChange={handleItemChange}
         handleSave={handleSave}
@@ -133,7 +113,7 @@ const MenuList: React.FC = () => {
         menuCategories={menuCategories}
       />
       <CategoryPriceUpdater
-        categories={categories}
+        menuCategories={menuCategories}
         fetchMenu={fetchMenu}
       />
     </div>
