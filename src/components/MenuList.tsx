@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getMenuItems, updateMenuItemPrice, createMenuItem, deleteMenuItem } from '../api.ts';
+import { getMenuItems, updateMenuItemPrice, createMenuItem, deleteMenuItem, getMenuPdf } from '../api.ts';
 import { useTranslation } from 'react-i18next';
 import CategoryManager from './CategoryManager.tsx';
 import CategoryPriceUpdater from './CategoryPriceUpdater.tsx';
@@ -95,8 +95,11 @@ const MenuList: React.FC = () => {
     }
   };
 
+  
+
   return (
     <div className="container">
+      
       <CategoryManager
         menuCategories={menuCategories}
         menu={menu}
